@@ -31,10 +31,10 @@ class PostDetailsFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_post_details, container, false)
 
-        val textView: TextView = root.findViewById(R.id.text_posts_details)
-        postDetailsViewModel.text.observe(this, Observer {
-            textView.text = "PostID: $it with  ${postDetailsFragmentArgs.postId}"
-        })
+//        val textView: TextView = root.findViewById(R.id.text_posts_details)
+//        postDetailsViewModel.text.observe(this, Observer {
+//            textView.text = "PostID: $it with  ${postDetailsFragmentArgs.postId}"
+//        })
 
         return root
     }
