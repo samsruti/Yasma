@@ -35,16 +35,10 @@ class PostsFragment : Fragment() {
             if (currentPost != null) {
                 findNavController()
                     .navigate(PostsFragmentDirections
-                                .actionNavigationPostsListsToPostDetailsFragment(currentPost.id))
+                                .actionNavigationPostsListsToPostDetailsFragment(currentPost.id, currentPost))
                 postsViewModel.displayPostDetailsComplete()
             }
         })
-
-
-
-//        textView.setOnClickListener {
-//            )
-//        }
 
         return binding.root
     }

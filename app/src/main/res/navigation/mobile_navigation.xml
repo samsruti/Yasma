@@ -38,6 +38,8 @@
         <argument
             android:name="post_id"
             app:argType="integer" />
+        <argument android:name="selectedPost"
+            app:argType="com.talview.yasma.samsruti.domain.Post"/>
     </fragment>
     <fragment
         android:id="@+id/albumDetailsFragment"

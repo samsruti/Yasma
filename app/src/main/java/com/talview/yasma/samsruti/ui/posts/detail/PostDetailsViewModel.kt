@@ -1,27 +1,28 @@
 package com.talview.yasma.samsruti.ui.albums.detail
 
 
-import android.os.Bundle
+import android.app.Application
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.talview.yasma.samsruti.R
+import com.talview.yasma.samsruti.domain.Post
 
 /**
  * A simple [Fragment] subclass.
  */
-class PostDetailsViewModel : ViewModel() {
+class PostDetailsViewModel(
+    currentPost: Post,
+    app: Application
+) : AndroidViewModel(app) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "posts details with comments"
+    private val _selectedPost = MutableLiveData<Post>()
+    val selectedPost: LiveData<Post>
+        get() = _selectedPost
+
+    init {
+        _selectedPost.value = currentPost
     }
-
-    val text: LiveData<String>
-        get() = _text
-
 
 }

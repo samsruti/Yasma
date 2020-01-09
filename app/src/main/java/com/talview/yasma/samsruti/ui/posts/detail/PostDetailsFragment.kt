@@ -11,14 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.talview.yasma.samsruti.R
+import com.talview.yasma.samsruti.databinding.FragmentPostDetailsBinding
 import com.talview.yasma.samsruti.ui.albums.detail.PostDetailsViewModel
 
 /**
  * A simple [Fragment] subclass.
  */
 class PostDetailsFragment : Fragment() {
-
-    private lateinit var postDetailsViewModel: PostDetailsViewModel
 
     private val postDetailsFragmentArgs: PostDetailsFragmentArgs by navArgs()
 
@@ -27,16 +26,16 @@ class PostDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        postDetailsViewModel = ViewModelProviders.of(this).get(PostDetailsViewModel::class.java)
+        val application = requireNotNull(activity).application
 
-        val root = inflater.inflate(R.layout.fragment_post_details, container, false)
+        val currentPost = postDetailsFragmentArgs.selectedPost
 
-//        val textView: TextView = root.findViewById(R.id.text_posts_details)
-//        postDetailsViewModel.text.observe(this, Observer {
-//            textView.text = "PostID: $it with  ${postDetailsFragmentArgs.postId}"
-//        })
+        val viewModelFactory = PostDetailsViewModelFactory(currentPost, application)
 
-        return root
+        val binding = FragmentPostDetailsBinding.inflate(inflater)
+        binding.viewModel =  ViewModelProviders.of(this, viewModelFactory).get(PostDetailsViewModel::class.java)
+
+        return binding.root
     }
 
 }
