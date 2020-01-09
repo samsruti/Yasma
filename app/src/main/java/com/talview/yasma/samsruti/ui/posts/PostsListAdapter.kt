@@ -14,7 +14,7 @@ class PostsListAdapter(val clickListener: CallBackClickListener): ListAdapter<Po
         :RecyclerView.ViewHolder(viewDataBinding.root){
 
         fun bind(post: Post){
-            viewDataBinding.postProperty = post
+            viewDataBinding.eachPost = post
             viewDataBinding.executePendingBindings()
         }
     }

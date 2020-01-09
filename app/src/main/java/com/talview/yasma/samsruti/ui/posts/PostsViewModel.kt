@@ -3,9 +3,9 @@ package com.talview.yasma.samsruti.ui.posts
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.talview.yasma.samsruti.domain.ApiStatus
 import com.talview.yasma.samsruti.domain.Post
 
-enum class ApiStatus {LOADING, DONE, ERROR}
 
 class PostsViewModel : ViewModel() {
 

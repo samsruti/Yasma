@@ -3,7 +3,7 @@
 
     <data>
         <variable
-            name="postProperty"
+            name="eachPost"
             type="com.talview.yasma.samsruti.domain.Post" />
 
     </data>
@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:text="@{postProperty.title}"
+                android:text="@{eachPost.title}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 android:textSize="21sp" />
 
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{postProperty.body}"
+                android:text="@{eachPost.body}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="17sp" />
         </LinearLayout>

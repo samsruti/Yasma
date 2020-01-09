@@ -3,6 +3,9 @@ package com.talview.yasma.samsruti.domain
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+
+enum class ApiStatus {LOADING, DONE, ERROR}
+
 @Parcelize
 data class Post(
     val userId : Int,
