@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/card_spacing"
-    android:layout_marginTop="@dimen/card_spacing"
-    android:layout_marginRight="@dimen/card_spacing">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <data>
+        <variable
+            name="postProperty"
+            type="com.talview.yasma.samsruti.domain.Post" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_marginTop="8dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:text="Title"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:textSize="21sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:maxLines="3"
-            android:text="Body"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="17sp" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="@{postProperty.title}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textSize="21sp" />
 
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{postProperty.body}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
