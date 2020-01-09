@@ -10,14 +10,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:padding="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:padding="6dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:spanCount="3"
         tools:itemCount="16"
-        tools:listitem="@layout/list_item_albums" />
+        tools:listitem="@layout/grid_view_album_photos_item" />
 
     <ImageView
         android:id="@+id/image_status"

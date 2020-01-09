@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.talview.yasma.samsruti.R
 
 class AlbumsFragment : Fragment() {
@@ -22,10 +23,16 @@ class AlbumsFragment : Fragment() {
         albumsViewModel =
             ViewModelProviders.of(this).get(AlbumsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_albums, container, false)
-        val textView: TextView = root.findViewById(R.id.text_albums)
-        albumsViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
+//        val textView: TextView = root.findViewById(R.id.text_albums)
+//        albumsViewModel.text.observe(this, Observer {
+//            textView.text = it
+//        })
+//
+//        textView.setOnClickListener {
+//            findNavController()
+//                .navigate(AlbumsFragmentDirections.actionNavigationAlbumListsToAlbumDetailsFragment(1))
+//        }
+
         return root
     }
 }
