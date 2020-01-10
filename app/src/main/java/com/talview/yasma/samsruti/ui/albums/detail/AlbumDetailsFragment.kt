@@ -6,20 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.lifecycle.Observer
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.talview.yasma.samsruti.R
-import com.talview.yasma.samsruti.ui.posts.detail.PostDetailsFragmentArgs
+import com.talview.yasma.samsruti.databinding.FragmentAlbumDetailsBinding
 
 /**
  * A simple [Fragment] subclass.
  */
 class AlbumDetailsFragment : Fragment() {
-
-    private lateinit var albumDetailsViewModel: AlbumDetailsViewModel
 
     val albumDetailsArgs: AlbumDetailsFragmentArgs by navArgs()
 
@@ -28,12 +23,23 @@ class AlbumDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        albumDetailsViewModel = ViewModelProviders.of(this).get(AlbumDetailsViewModel::class.java)
+        val application = requireNotNull(activity).application
 
-        val root = inflater.inflate(R.layout.fragment_album_details, container, false)
+        val currentAlbum = albumDetailsArgs.selectedAlbum
+
+        val viewModelFactory = AlbumDetailsViewModelFactory(currentAlbum, application)
+
+        val binding = FragmentAlbumDetailsBinding.inflate(inflater)
+        binding.setLifecycleOwner(this)
+        binding.selectedAlbumViewModel =  ViewModelProviders.of(this, viewModelFactory)
+            .get(AlbumDetailsViewModel::class.java)
+
+        binding.albumPhotosRecyclerView.adapter = AlbumPhotosGridAdapter(AlbumPhotosGridAdapter.CallBackClickListener{
+            Toast.makeText(activity, "Photo: $it", Toast.LENGTH_SHORT).show()
+        })
 
 
-        return root
+        return binding.root
     }
 
 

@@ -22,17 +22,18 @@ data class Comment(
     val body : String
 ): Parcelable
 
-
+@Parcelize
 data class Album(
     val userId : Int,
     val id : Int,
     val title : String
-)
+) : Parcelable
 
-data class Photos(
+@Parcelize
+data class Photo(
     val albumId: Int,
     val id: Int,
     val thumbnailUrl: String,
     val title: String,
     val url: String
-)
+) : Parcelable

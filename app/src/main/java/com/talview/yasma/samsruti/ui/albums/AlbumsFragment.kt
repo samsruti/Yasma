@@ -41,7 +41,7 @@ class AlbumsFragment : Fragment() {
                 findNavController()
                     .navigate(
                         AlbumsFragmentDirections
-                            .actionNavigationAlbumListsToAlbumDetailsFragment(currentAlbum.id))
+                            .actionNavigationAlbumListsToAlbumDetailsFragment(currentAlbum.id, currentAlbum))
                 albumsViewModel.displayAlbumDetailsComplete()
             }
         })
