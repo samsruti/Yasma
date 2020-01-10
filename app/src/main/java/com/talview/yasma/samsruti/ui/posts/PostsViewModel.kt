@@ -41,32 +41,25 @@ class PostsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     init {
+
+        _status.value = ApiStatus.LOADING
         uiCoroutineScope.launch {
-            _allPosts.value = postRepository.getAllPosts()
+            fetchAllPosts(postRepository.getAllPosts())
+        }
+
+    }
+
+    fun fetchAllPosts(userPosts: List<Post>?) {
+        if (userPosts == null){
+            _status.value = ApiStatus.ERROR
+        } else if(userPosts.isEmpty()){
+            _status.value = ApiStatus.UNSUCCESSFUL
+        } else {
+            _allPosts.value = userPosts
+            _status.value = ApiStatus.DONE
         }
     }
 
-
-
-    private fun getAllPostsFromNetwork() {
-
-
-
-//        uiCoroutineScope.launch {
-//            _status.value = ApiStatus.LOADING
-//
-//            try {
-//                val getAllPostResponse = getAllPosts()
-//                _status.value = ApiStatus.DONE
-//                _allPosts.value = getAllPostResponse.
-//
-//            } catch (e: Exception){
-//                _status.value = ApiStatus.ERROR
-//                _allPosts.value = ArrayList()
-//
-//            }
-//        }
-    }
 
     override fun onCleared() {
         super.onCleared()

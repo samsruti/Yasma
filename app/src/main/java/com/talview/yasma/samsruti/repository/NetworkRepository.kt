@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 
 class PostRepository() {
 
-    suspend fun getAllPosts(): List<Post> {
+    suspend fun getAllPosts(): List<Post>? {
         return withContext(Dispatchers.IO){
             YasmaApi.retrofitNetworkService.getAllPosts()
         }
