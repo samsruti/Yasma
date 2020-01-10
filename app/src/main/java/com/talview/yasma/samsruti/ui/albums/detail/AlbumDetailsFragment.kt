@@ -19,7 +19,7 @@ import com.talview.yasma.samsruti.ui.posts.detail.PostDetailsFragmentArgs
  */
 class AlbumDetailsFragment : Fragment() {
 
-    private lateinit var albumDetailsViewModel: PostDetailsViewModel
+    private lateinit var albumDetailsViewModel: AlbumDetailsViewModel
 
     val albumDetailsArgs: AlbumDetailsFragmentArgs by navArgs()
 
@@ -28,7 +28,7 @@ class AlbumDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        albumDetailsViewModel = ViewModelProviders.of(this).get(PostDetailsViewModel::class.java)
+        albumDetailsViewModel = ViewModelProviders.of(this).get(AlbumDetailsViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_album_details, container, false)
 
