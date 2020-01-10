@@ -1,25 +1,23 @@
 package com.talview.yasma.samsruti.ui.posts
 
-import android.util.Log
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.talview.yasma.samsruti.domain.ApiStatus
 import com.talview.yasma.samsruti.domain.Post
-import com.talview.yasma.samsruti.network.YasmaApi
 import com.talview.yasma.samsruti.repository.PostRepository
 import kotlinx.coroutines.*
-import okhttp3.Dispatcher
-import retrofit2.Response
-import timber.log.Timber
-import java.lang.Exception
-import java.util.ArrayList
 
 
-class PostsViewModel : ViewModel() {
+class PostsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val viewModelJob = Job()
     private val uiCoroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+
+    private val postRepository = PostRepository()
+
 
 
     private val _allPosts = MutableLiveData<List<Post>>()
@@ -43,42 +41,31 @@ class PostsViewModel : ViewModel() {
     }
 
     init {
-        _allPosts.value = emptyList()
-
-        getAllPostsFromNetwork()
-
-
+        uiCoroutineScope.launch {
+            _allPosts.value = postRepository.getAllPosts()
+        }
     }
 
-    private suspend fun getAllPosts() = YasmaApi.retrofitNetworkService.getAllPosts()
 
-//    private val postRepository = PostRepository()
 
     private fun getAllPostsFromNetwork() {
 
+
+
 //        uiCoroutineScope.launch {
-//            postRepository.refreshAllPosts()
+//            _status.value = ApiStatus.LOADING
+//
+//            try {
+//                val getAllPostResponse = getAllPosts()
+//                _status.value = ApiStatus.DONE
+//                _allPosts.value = getAllPostResponse.
+//
+//            } catch (e: Exception){
+//                _status.value = ApiStatus.ERROR
+//                _allPosts.value = ArrayList()
+//
+//            }
 //        }
-
-        uiCoroutineScope.launch {
-            _status.value = ApiStatus.LOADING
-
-            try {
-                val getAllPostResponse = getAllPosts()
-                if (getAllPostResponse.isSuccessful && getAllPostResponse.body() != null){
-                    _status.value = ApiStatus.DONE
-                    _allPosts.value = getAllPostResponse.body()
-                } else {
-
-                    _status.value = ApiStatus.UNSUCCESSFUL
-                    _allPosts.value = ArrayList()
-                }
-            } catch (e: Exception){
-                _status.value = ApiStatus.ERROR
-                _allPosts.value = ArrayList()
-
-            }
-        }
     }
 
     override fun onCleared() {

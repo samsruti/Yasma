@@ -29,7 +29,7 @@ interface YasmaApiService {
 
 //    Get all posts
     @GET("posts")
-    suspend fun getAllPosts(): Response<List<Post>>
+    suspend fun getAllPosts(): List<Post>
 
 //        Post details
     @GET("posts/{id}")

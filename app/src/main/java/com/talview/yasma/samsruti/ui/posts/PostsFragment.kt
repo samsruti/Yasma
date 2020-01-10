@@ -13,9 +13,7 @@ import com.talview.yasma.samsruti.domain.Post
 
 class PostsFragment : Fragment() {
 
-    private val postsViewModel: PostsViewModel by lazy {
-        ViewModelProviders.of(this).get(PostsViewModel::class.java)
-    }
+    private lateinit var postsViewModel: PostsViewModel
 
     private var postListsAdapter: PostsListAdapter? = null
 
@@ -25,8 +23,15 @@ class PostsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
+        val application = requireNotNull(activity).application
+
         val binding = FragmentPostsBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
+
+        val viewModelFactory = PostsViewModelFactory(application)
+
+        postsViewModel =  ViewModelProviders.of(this, viewModelFactory).get(PostsViewModel::class.java)
 
         binding.viewModel = postsViewModel
 
@@ -45,11 +50,6 @@ class PostsFragment : Fragment() {
                                 .actionNavigationPostsListsToPostDetailsFragment(currentPost.id, currentPost))
                 postsViewModel.displayPostDetailsComplete()
             }
-        })
-
-        postsViewModel.allPosts.observe(viewLifecycleOwner, Observer {posts ->
-            postListsAdapter?.submitList(posts)
-
         })
 
         return binding.root

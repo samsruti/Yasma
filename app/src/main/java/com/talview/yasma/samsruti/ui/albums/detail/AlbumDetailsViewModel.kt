@@ -9,6 +9,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.talview.yasma.samsruti.domain.Album
 import com.talview.yasma.samsruti.domain.Photo
+import com.talview.yasma.samsruti.repository.AlbumPhotosRepository
+import com.talview.yasma.samsruti.repository.PostRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -17,6 +23,12 @@ class AlbumDetailsViewModel(
     currentAlbum: Album,
     app: Application
 ) : AndroidViewModel(app) {
+
+    private val viewModelJob = Job()
+    private val uiCoroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+
+    private val albumPhotosRepository = AlbumPhotosRepository()
 
     private val _selectedAlbum = MutableLiveData<Album>()
     val selectedAlbum: LiveData<Album>
@@ -28,12 +40,8 @@ class AlbumDetailsViewModel(
 
     init {
         _selectedAlbum.value = currentAlbum
-        val listPhotos = mutableListOf<Photo>(
-            Photo(1,1,"https://via.placeholder.com/150/92c952","Title1","https://via.placeholder.com/600/92c952"),
-            Photo(1,2,"https://via.placeholder.com/150/771796","Title2","https://via.placeholder.com/600/771796"),
-            Photo(1,3,"https://via.placeholder.com/150/24f355","Title3","https://via.placeholder.com/600/24f355"),
-            Photo(1,4,"https://via.placeholder.com/150/24f355","Title3","https://via.placeholder.com/600/24f355")
-        )
-        _allPhotos.value = listPhotos
+        uiCoroutineScope.launch {
+            _allPhotos.value = albumPhotosRepository.getAllPhotos(currentAlbum.id)
+        }
     }
 }

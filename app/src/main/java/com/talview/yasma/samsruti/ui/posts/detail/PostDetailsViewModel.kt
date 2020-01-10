@@ -9,6 +9,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.talview.yasma.samsruti.domain.Comment
 import com.talview.yasma.samsruti.domain.Post
+import com.talview.yasma.samsruti.repository.PostCommentRepository
+import com.talview.yasma.samsruti.repository.PostRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -17,6 +23,15 @@ class PostDetailsViewModel(
     currentPost: Post,
     app: Application
 ) : AndroidViewModel(app) {
+
+    private val viewModelJob = Job()
+    private val uiCoroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+
+    private val postCommentRepository = PostCommentRepository()
+
+
+
 
     private val _selectedPost = MutableLiveData<Post>()
     val selectedPost: LiveData<Post>
@@ -28,11 +43,10 @@ class PostDetailsViewModel(
 
     init {
         _selectedPost.value = currentPost
-        val list = mutableListOf(
-            Comment(1,1,"sam", "sam@sam.com", "hey! this is body"),
-            Comment(1,2,"sam 2 ", "sam@sam.com", "hey! this is body 2 ")
-        )
-        _allComments.value = list
+        uiCoroutineScope.launch {
+            _allComments.value = postCommentRepository.getAllComments(currentPost.id)
+        }
+
     }
 
 

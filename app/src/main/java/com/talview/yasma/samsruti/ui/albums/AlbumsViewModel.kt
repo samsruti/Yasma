@@ -5,8 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.talview.yasma.samsruti.domain.Album
 import com.talview.yasma.samsruti.domain.ApiStatus
+import com.talview.yasma.samsruti.repository.AlbumRepository
+import com.talview.yasma.samsruti.repository.PostRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class AlbumsViewModel : ViewModel() {
+
+    private val viewModelJob = Job()
+    private val uiCoroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+
+    private val albumRepository = AlbumRepository()
 
     private val _allAlbums = MutableLiveData<List<Album>>()
     val allAlbums: LiveData<List<Album>>
@@ -30,11 +42,8 @@ class AlbumsViewModel : ViewModel() {
 
     init {
 
-        val list = mutableListOf<Album>(
-            Album(1,1,"album1"),
-            Album(1,2,"album2"),
-            Album(1,3,"album3")
-        )
-        _allAlbums.value = list
+        uiCoroutineScope.launch {
+            _allAlbums.value = albumRepository.getAllAlbums()
+        }
     }
 }
