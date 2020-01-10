@@ -9,12 +9,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.talview.yasma.samsruti.databinding.FragmentPostsBinding
+import com.talview.yasma.samsruti.domain.Post
 
 class PostsFragment : Fragment() {
 
     private val postsViewModel: PostsViewModel by lazy {
         ViewModelProviders.of(this).get(PostsViewModel::class.java)
     }
+
+    private var postListsAdapter: PostsListAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,9 +30,13 @@ class PostsFragment : Fragment() {
 
         binding.viewModel = postsViewModel
 
-        binding.postRecyclerView.adapter = PostsListAdapter(PostsListAdapter.CallBackClickListener{
+        postListsAdapter = PostsListAdapter(PostsListAdapter.CallBackClickListener{
             postsViewModel.displayPostDetails(it)
         })
+
+        binding.postRecyclerView.apply {
+            adapter = postListsAdapter
+        }
 
         postsViewModel.navigateToSelectedPost.observe(this, Observer {currentPost ->
             if (currentPost != null) {
@@ -38,6 +45,11 @@ class PostsFragment : Fragment() {
                                 .actionNavigationPostsListsToPostDetailsFragment(currentPost.id, currentPost))
                 postsViewModel.displayPostDetailsComplete()
             }
+        })
+
+        postsViewModel.allPosts.observe(viewLifecycleOwner, Observer {posts ->
+            postListsAdapter?.submitList(posts)
+
         })
 
         return binding.root

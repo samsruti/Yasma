@@ -6,6 +6,7 @@ import com.talview.yasma.samsruti.domain.Album
 import com.talview.yasma.samsruti.domain.Comment
 import com.talview.yasma.samsruti.domain.Photo
 import com.talview.yasma.samsruti.domain.Post
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
@@ -28,7 +29,7 @@ interface YasmaApiService {
 
 //    Get all posts
     @GET("posts")
-    suspend fun getAllPosts(): List<Post>
+    suspend fun getAllPosts(): Response<List<Post>>
 
 //        Post details
     @GET("posts/{id}")
