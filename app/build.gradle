@@ -55,6 +55,23 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 
+//     Moshi for parsing the JSON format - - Convert JSON to Kotlin and vice versa.
+    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+
+//     Retrofit for networking
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+//    Retrofit with Moshi
+    implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
+
+//    Timber for logging
+    implementation "com.jakewharton.timber:timber:$version_timber"
+
+//    Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_kotlin_coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
+
+
+
     testImplementation 'junit:junit:4.12'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
