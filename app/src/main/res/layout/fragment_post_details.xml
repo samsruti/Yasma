@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.talview.yasma.samsruti.ui.albums.detail.PostDetailsViewModel" />
+            type="com.talview.yasma.samsruti.ui.posts.detail.PostDetailsViewModel" />
 
     </data>
 
@@ -44,7 +44,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="@{viewModel.selectedPost.body}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="17sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/post_title" />
@@ -61,6 +61,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/post_body" />
 
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="379dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/readCommentsHeader" />
+
             <TextView
                 android:id="@+id/readCommentsHeader"
                 android:layout_width="0dp"
@@ -68,12 +80,13 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Read All Comments"
+                app:totalCount = "@{viewModel.allComments}"
                 android:textAlignment="viewStart"
-                android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/dropDownIcon"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider" />
 
@@ -98,14 +111,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/readCommentsHeader"
+                app:layout_constraintTop_toTopOf="@+id/comments_recyclerView"
                 app:showWhenListEmpty="@{viewModel.allComments}"
                 tools:showIn="@layout/fragment_posts">
 
                 <include layout="@layout/single_list_comment_item_shimmer" />
 
             </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <ImageView
+                android:id="@+id/dropDownIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/readCommentsHeader"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/readCommentsHeader"
+                app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+                android:contentDescription="TODO" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

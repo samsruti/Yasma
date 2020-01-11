@@ -11,12 +11,13 @@
     </data>
 
     <ImageView
-        android:id="@+id/mars_image"
+        android:id="@+id/album_image"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:padding="2dp"
         app:photoThumbnailURL="@{currentPhoto.thumbnailUrl}"
-        tools:src="@tools:sample/backgrounds/scenic"/>
+        tools:src="@tools:sample/backgrounds/scenic"
+        android:contentDescription="album photo" />
 </layout>

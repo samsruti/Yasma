@@ -33,7 +33,7 @@
     <fragment
         android:id="@+id/postDetailsFragment"
         android:name="com.talview.yasma.samsruti.ui.posts.detail.PostDetailsFragment"
-        android:label="fragment_post_details"
+        android:label=""
         tools:layout="@layout/fragment_post_details" >
         <argument
             android:name="post_id"
@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/albumDetailsFragment"
         android:name="com.talview.yasma.samsruti.ui.albums.detail.AlbumDetailsFragment"
-        android:label="fragment_album_details"
+        android:label="All Photos"
         tools:layout="@layout/fragment_album_details" >
         <argument
             android:name="album_id"

@@ -58,6 +58,7 @@ class AlbumListAdapter(val clickListener: CallBackClickListener): ListAdapter<Al
     class CallBackClickListener(val clickListener: (Album: Album) -> Unit) {
         fun onClick(Album: Album) = clickListener(Album)
     }
+
 }
 
 

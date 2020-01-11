@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.talview.yasma.samsruti.databinding.GridViewAlbumPhotosItemBinding
-import com.talview.yasma.samsruti.databinding.ListItemPostBinding
 import com.talview.yasma.samsruti.domain.Photo
 
 class AlbumPhotosGridAdapter(val clickListener: CallBackClickListener)

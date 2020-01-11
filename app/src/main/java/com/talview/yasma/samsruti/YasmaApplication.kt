@@ -1,8 +1,6 @@
 package com.talview.yasma.samsruti
 
 import android.app.Application
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
 class YasmaApplication : Application() {
@@ -13,4 +11,5 @@ class YasmaApplication : Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
     }
+
 }

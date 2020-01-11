@@ -4,24 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.talview.yasma.samsruti.R
 import com.talview.yasma.samsruti.databinding.FragmentAlbumsBinding
-import com.talview.yasma.samsruti.databinding.FragmentPostsBinding
 import com.talview.yasma.samsruti.domain.ApiStatus
-import com.talview.yasma.samsruti.ui.posts.PostsFragmentDirections
-import com.talview.yasma.samsruti.ui.posts.PostsListAdapter
 
 class AlbumsFragment : Fragment() {
 
     private val albumsViewModel: AlbumsViewModel by lazy {
-        ViewModelProviders.of(this).get(AlbumsViewModel::class.java)
+
+        val application = requireNotNull(activity).application
+
+        val viewModelFactory = AlbumsViewModel.Factory(application)
+
+        ViewModelProviders.of(this,viewModelFactory).get(AlbumsViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -31,7 +29,7 @@ class AlbumsFragment : Fragment() {
     ): View? {
 
         val binding = FragmentAlbumsBinding.inflate(inflater,container,false)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         binding.viewModel = albumsViewModel
 

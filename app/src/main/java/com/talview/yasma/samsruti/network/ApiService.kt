@@ -6,12 +6,10 @@ import com.talview.yasma.samsruti.domain.Album
 import com.talview.yasma.samsruti.domain.Comment
 import com.talview.yasma.samsruti.domain.Photo
 import com.talview.yasma.samsruti.domain.Post
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
@@ -31,13 +29,9 @@ interface YasmaApiService {
     @GET("posts")
     suspend fun getAllPosts(): List<Post>
 
-//        Post details
-    @GET("posts/{id}")
-    suspend fun getPostDetails(@Path("id") postId: Int): Post
-
     //    Post comments
-    @GET("posts/{id}/comments")
-    suspend fun getPostComments(@Path("id") postId: Int): List<Comment>
+    @GET("comments")
+    suspend fun getPostComments(@Query("postId") postId: Int): List<Comment>
 
 //-------------------------------------------------------------------------------
 
@@ -45,13 +39,9 @@ interface YasmaApiService {
     @GET("albums")
     suspend fun getAllAlbums(): List<Album>
 
-//    Get all photos from each album
-    @GET("albums/{id}")
-    suspend fun getAlbumDetails(@Path("id") albumId: Int): Album
-
-//    Get all photos from each album
-    @GET("albums/{id}/photos")
-    suspend fun getAlbumPhotos(@Path("id") albumId: Int): List<Photo>
+    //    Get all photos from each album
+    @GET("photos")
+    suspend fun getAlbumPhotos(@Query("albumId") albumId: Int): List<Photo>
 
 }
 

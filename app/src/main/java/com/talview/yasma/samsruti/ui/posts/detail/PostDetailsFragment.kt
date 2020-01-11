@@ -2,20 +2,16 @@ package com.talview.yasma.samsruti.ui.posts.detail
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
-import com.talview.yasma.samsruti.R
 import com.talview.yasma.samsruti.databinding.FragmentPostDetailsBinding
-import com.talview.yasma.samsruti.databinding.ListItemPostCommentBinding
 import com.talview.yasma.samsruti.domain.ApiStatus
-import com.talview.yasma.samsruti.ui.albums.detail.PostDetailsViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -28,7 +24,7 @@ class PostDetailsFragment : Fragment() {
         val application = requireNotNull(activity).application
 
         val currentPost = postDetailsFragmentArgs.selectedPost
-        val viewModelFactory = PostDetailsViewModelFactory(currentPost, application)
+        val viewModelFactory = PostDetailsViewModel.Factory(currentPost, application)
         ViewModelProviders.of(this, viewModelFactory).get(PostDetailsViewModel::class.java)
     }
 
@@ -41,7 +37,7 @@ class PostDetailsFragment : Fragment() {
 
 
         val binding = FragmentPostDetailsBinding.inflate(inflater,container,false)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         viewModel.status.observe(viewLifecycleOwner, Observer {
@@ -53,6 +49,21 @@ class PostDetailsFragment : Fragment() {
                     binding.shimmerLayout.stopShimmer()
             }
         })
+
+        binding.dropDownIcon.setOnClickListener {
+
+            when (binding.commentsRecyclerView.visibility){
+                View.GONE -> {
+                    binding.commentsRecyclerView.visibility = View.VISIBLE
+                }
+
+                View.VISIBLE ->{
+                    binding.commentsRecyclerView.visibility = View.GONE
+                }
+
+            }
+            binding.dropDownIcon.animate().rotationBy(180F).setDuration(300).start()
+        }
 
 
 

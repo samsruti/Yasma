@@ -1,6 +1,5 @@
 package com.talview.yasma.samsruti.ui.posts.detail
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -47,9 +46,7 @@ class PostCommentsListAdapter(val clickListener: CallBackClickListener)
 
     }
 
-    class CallBackClickListener(val clickListener: (comment: Comment) -> Unit) {
-        fun onClick(comment: Comment) = clickListener(comment)
-    }
+    class CallBackClickListener(val clickListener: (comment: Comment) -> Unit)
 }
 
 

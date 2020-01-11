@@ -41,7 +41,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:showWhenListEmpty="@{viewModel.allAlbums}"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:contentDescription="all album status" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_layout"

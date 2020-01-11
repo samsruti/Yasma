@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.talview.yasma.samsruti.databinding.FragmentPostsBinding
 import com.talview.yasma.samsruti.domain.ApiStatus
-import com.talview.yasma.samsruti.domain.Post
 
 class PostsFragment : Fragment() {
 
@@ -25,17 +24,14 @@ class PostsFragment : Fragment() {
     ): View? {
 
 
-        val binding = FragmentPostsBinding.inflate(inflater,container,false)
-        binding.setLifecycleOwner(this)
+        val binding = FragmentPostsBinding.inflate(inflater)
+        binding.lifecycleOwner = this
 
 
-//        TODO: ViewModelFactory
+        val application = requireNotNull(activity).application
+        val viewModelFactory = PostsViewModel.Factory(application)
+         postsViewModel =  ViewModelProviders.of(this, viewModelFactory).get(PostsViewModel::class.java)
 
-//        val application = requireNotNull(activity).application
-//        val viewModelFactory = PostsViewModelFactory(application)
-//         postsViewModel =  ViewModelProviders.of(this, viewModelFactory).get(PostsViewModel::class.java)
-
-        postsViewModel =  ViewModelProviders.of(this).get(PostsViewModel::class.java)
 
         binding.viewModel = postsViewModel
         postListsAdapter = PostsListAdapter(PostsListAdapter.CallBackClickListener{

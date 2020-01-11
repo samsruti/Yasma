@@ -14,7 +14,6 @@ import com.talview.yasma.samsruti.ui.albums.AlbumListAdapter
 import com.talview.yasma.samsruti.ui.albums.detail.AlbumPhotosGridAdapter
 import com.talview.yasma.samsruti.ui.posts.PostsListAdapter
 import com.talview.yasma.samsruti.ui.posts.detail.PostCommentsListAdapter
-import timber.log.Timber
 
 @BindingAdapter("postListData")
 fun bindAllPostRecyclerView(recyclerView: RecyclerView, data: List<Post>?) {
@@ -56,7 +55,7 @@ fun bindPhotoThumbnailURL(imageView: ImageView, thumbnailURL: String?) {
         Glide.with(imageView.context)
             .load(imageUri)
             .apply(RequestOptions()
-                .placeholder(R.drawable.photo_loading_animation)
+                .placeholder(R.drawable.ic_loader_img)
                 .error(R.drawable.ic_error_outline_black_24dp)
             )
         //Todo: Resizing animation
@@ -73,23 +72,7 @@ fun <T> View.showOnlyWhenListEmpty(data: List<T>? ){
     }
 }
 
-fun View.setViewVisibility(status: ApiStatus){
-    when (status) {
-        ApiStatus.LOADING-> {
-            visibility = View.VISIBLE
-        }
-        ApiStatus.ERROR -> {
-           visibility = View.VISIBLE
-        }
-        ApiStatus.DONE -> {
-            visibility = View.GONE
-        }
-        ApiStatus.UNSUCCESSFUL -> {
-            visibility = View.GONE
-        }
 
-    }
-}
 
 @BindingAdapter("showTextForEmptyRecyclerView")
 fun showTextForEmptyRecyclerView(textView: TextView, status: ApiStatus){
@@ -119,4 +102,14 @@ fun showImageForEmptyRecyclerView(imageView: ImageView, status: ApiStatus){
     else if (status == ApiStatus.ERROR) {
         imageView.setImageResource(R.drawable.ic_error_outline_black_24dp)
     }
+}
+
+@BindingAdapter("totalCount")
+fun <T> showTotalCount(textView: TextView,data: List<T>?  ){
+    var count = 0
+    if (!data.isNullOrEmpty())
+        count = data.size
+
+
+    textView.text = "Comments ($count)"
 }
