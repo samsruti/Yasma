@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.talview.yasma.samsruti.domain.Album
+import com.talview.yasma.samsruti.domain.ApiStatus
+import com.talview.yasma.samsruti.domain.Comment
 import com.talview.yasma.samsruti.domain.Photo
 import com.talview.yasma.samsruti.repository.AlbumPhotosRepository
 import com.talview.yasma.samsruti.repository.PostRepository
@@ -27,6 +29,9 @@ class AlbumDetailsViewModel(
     private val viewModelJob = Job()
     private val uiCoroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
+    private val _status = MutableLiveData<ApiStatus>()
+    val status: LiveData<ApiStatus>
+        get() = _status
 
     private val albumPhotosRepository = AlbumPhotosRepository()
 
@@ -40,8 +45,21 @@ class AlbumDetailsViewModel(
 
     init {
         _selectedAlbum.value = currentAlbum
+
+        _status.value = ApiStatus.LOADING
         uiCoroutineScope.launch {
-            _allPhotos.value = albumPhotosRepository.getAllPhotos(currentAlbum.id)
+            fetchAllPhotos(albumPhotosRepository.getAllPhotos(currentAlbum.id))
+        }
+    }
+
+    fun fetchAllPhotos(allPhotos: List<Photo>?){
+        if (allPhotos == null){
+            _status.value = ApiStatus.ERROR
+        } else if(allPhotos.isEmpty()){
+            _status.value = ApiStatus.UNSUCCESSFUL
+        } else {
+            _allPhotos.value = allPhotos
+            _status.value = ApiStatus.DONE
         }
     }
 }

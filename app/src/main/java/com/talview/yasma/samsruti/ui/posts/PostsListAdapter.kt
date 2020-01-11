@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.talview.yasma.samsruti.R
 import com.talview.yasma.samsruti.databinding.ListItemPostBinding
 import com.talview.yasma.samsruti.domain.Post
 
@@ -15,8 +16,14 @@ class PostsListAdapter(val clickListener: CallBackClickListener): ListAdapter<Po
 
         fun bind(post: Post){
             viewDataBinding.eachPost = post
+            updateUserNameTextView(post)
             viewDataBinding.executePendingBindings()
         }
+
+        private fun updateUserNameTextView(post: Post) {
+            viewDataBinding.postedByUser.text = viewDataBinding.root.context.getString(R.string.display_user_name,post.userId)
+        }
+
     }
 
     companion object DiffCallback: DiffUtil.ItemCallback<Post>() {
@@ -31,7 +38,8 @@ class PostsListAdapter(val clickListener: CallBackClickListener): ListAdapter<Po
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        return PostViewHolder(ListItemPostBinding.inflate(LayoutInflater.from(parent.context)))
+        return PostViewHolder(ListItemPostBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
 

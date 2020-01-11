@@ -2,16 +2,14 @@ package com.talview.yasma.samsruti.util
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.talview.yasma.samsruti.R
-import com.talview.yasma.samsruti.domain.Album
-import com.talview.yasma.samsruti.domain.Comment
-import com.talview.yasma.samsruti.domain.Photo
-import com.talview.yasma.samsruti.domain.Post
+import com.talview.yasma.samsruti.domain.*
 import com.talview.yasma.samsruti.ui.albums.AlbumListAdapter
 import com.talview.yasma.samsruti.ui.albums.detail.AlbumPhotosGridAdapter
 import com.talview.yasma.samsruti.ui.posts.PostsListAdapter
@@ -61,17 +59,64 @@ fun bindPhotoThumbnailURL(imageView: ImageView, thumbnailURL: String?) {
                 .placeholder(R.drawable.photo_loading_animation)
                 .error(R.drawable.ic_error_outline_black_24dp)
             )
-
+        //Todo: Resizing animation
             .into(imageView)
-//        Todo: add error image.
     }
 }
 
 @BindingAdapter("showWhenListEmpty")
-fun <T> showOnlyWhenListEmpty(imageView: ImageView, data: List<T>? ){
+fun <T> View.showOnlyWhenListEmpty(data: List<T>? ){
 //    Timber.d("Binding: $data")
-    imageView.visibility = when {
+    this.visibility = when {
         data.isNullOrEmpty() -> View.VISIBLE
         else -> View.GONE
+    }
+}
+
+fun View.setViewVisibility(status: ApiStatus){
+    when (status) {
+        ApiStatus.LOADING-> {
+            visibility = View.VISIBLE
+        }
+        ApiStatus.ERROR -> {
+           visibility = View.VISIBLE
+        }
+        ApiStatus.DONE -> {
+            visibility = View.GONE
+        }
+        ApiStatus.UNSUCCESSFUL -> {
+            visibility = View.GONE
+        }
+
+    }
+}
+
+@BindingAdapter("showTextForEmptyRecyclerView")
+fun showTextForEmptyRecyclerView(textView: TextView, status: ApiStatus){
+//    Timber.d("Binding: $data")
+    textView.setViewVisibility(status)
+
+    if (status == ApiStatus.LOADING) {
+        textView.text = "Loading"
+    }
+    else if (status == ApiStatus.ERROR) {
+        textView.text = "Error!"
+
+    } else if (status == ApiStatus.UNSUCCESSFUL){
+        textView.text = "Empty"
+    }
+}
+
+@BindingAdapter("showImageForEmptyRecyclerView")
+fun showImageForEmptyRecyclerView(imageView: ImageView, status: ApiStatus){
+//    Timber.d("Binding: $data")
+
+    imageView.setViewVisibility(status)
+
+    if (status == ApiStatus.LOADING) {
+        imageView.setImageResource(R.drawable.photo_loading_animation)
+    }
+    else if (status == ApiStatus.ERROR) {
+        imageView.setImageResource(R.drawable.ic_error_outline_black_24dp)
     }
 }

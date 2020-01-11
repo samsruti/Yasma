@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.talview.yasma.samsruti.databinding.FragmentPostsBinding
+import com.talview.yasma.samsruti.domain.ApiStatus
 import com.talview.yasma.samsruti.domain.Post
 
 class PostsFragment : Fragment() {
@@ -24,7 +25,7 @@ class PostsFragment : Fragment() {
     ): View? {
 
 
-        val binding = FragmentPostsBinding.inflate(inflater)
+        val binding = FragmentPostsBinding.inflate(inflater,container,false)
         binding.setLifecycleOwner(this)
 
 
@@ -37,14 +38,24 @@ class PostsFragment : Fragment() {
         postsViewModel =  ViewModelProviders.of(this).get(PostsViewModel::class.java)
 
         binding.viewModel = postsViewModel
-
         postListsAdapter = PostsListAdapter(PostsListAdapter.CallBackClickListener{
             postsViewModel.displayPostDetails(it)
+
         })
 
         binding.postRecyclerView.apply {
             adapter = postListsAdapter
         }
+
+        postsViewModel.status.observe(this, Observer {
+            when(it){
+                ApiStatus.LOADING ->
+                    binding.shimmerLayout.startShimmer()
+                else ->
+
+                    binding.shimmerLayout.stopShimmer()
+            }
+        })
 
         postsViewModel.navigateToSelectedPost.observe(this, Observer {currentPost ->
             if (currentPost != null) {

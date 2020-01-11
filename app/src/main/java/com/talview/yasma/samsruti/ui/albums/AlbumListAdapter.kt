@@ -18,6 +18,14 @@ class AlbumListAdapter(val clickListener: CallBackClickListener): ListAdapter<Al
             viewDataBinding.eachAlbum = album
             viewDataBinding.executePendingBindings()
         }
+
+        companion object {
+            fun from(parent: ViewGroup): AlbumViewHolder {
+                val inflater = LayoutInflater.from(parent.context)
+                val binding = ListItemAlbumsBinding.inflate(inflater, parent, false)
+                return AlbumViewHolder(binding)
+            }
+        }
     }
 
     companion object DiffCallback: DiffUtil.ItemCallback<Album>() {
@@ -32,8 +40,10 @@ class AlbumListAdapter(val clickListener: CallBackClickListener): ListAdapter<Al
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
-        return AlbumViewHolder(ListItemAlbumsBinding.inflate(LayoutInflater.from(parent.context)))
+        return AlbumViewHolder.from(parent)
     }
+
+
 
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {

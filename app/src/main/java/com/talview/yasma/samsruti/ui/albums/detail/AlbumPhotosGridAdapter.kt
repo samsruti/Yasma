@@ -33,7 +33,8 @@ class AlbumPhotosGridAdapter(val clickListener: CallBackClickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        return PostViewHolder(GridViewAlbumPhotosItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return PostViewHolder(GridViewAlbumPhotosItemBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
 

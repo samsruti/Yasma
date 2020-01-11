@@ -33,13 +33,13 @@ class PostCommentsListAdapter(val clickListener: CallBackClickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostCommentViewHolder {
-        return PostCommentViewHolder(ListItemPostCommentBinding.inflate(LayoutInflater.from(parent.context)))
+        return PostCommentViewHolder(ListItemPostCommentBinding
+            .inflate(LayoutInflater.from(parent.context), parent,false))
     }
 
 
     override fun onBindViewHolder(holder: PostCommentViewHolder, position: Int) {
         val currentComment = getItem(position)
-        Log.v("Comment", "$currentComment")
         holder.itemView.setOnClickListener {
             clickListener.clickListener(currentComment)
         }

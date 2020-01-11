@@ -35,11 +35,23 @@
             android:id="@+id/image_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:showImageForEmptyRecyclerView="@{selectedAlbumViewModel.status}"
+            android:src="@drawable/ic_error_outline_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:showTextForEmptyRecyclerView="@{selectedAlbumViewModel.status}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/album_photos_recyclerView"
+            app:layout_constraintTop_toBottomOf="@+id/image_status" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

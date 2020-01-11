@@ -19,7 +19,7 @@ class PostRepository() {
 
 class PostCommentRepository() {
 
-    suspend fun getAllComments(postId: Int): List<Comment> {
+    suspend fun getAllComments(postId: Int): List<Comment>? {
         return withContext(Dispatchers.IO){
             YasmaApi.retrofitNetworkService.getPostComments(postId)
         }
@@ -28,7 +28,7 @@ class PostCommentRepository() {
 
 class AlbumRepository() {
 
-    suspend fun getAllAlbums(): List<Album> {
+    suspend fun getAllAlbums(): List<Album>? {
         return withContext(Dispatchers.IO){
             YasmaApi.retrofitNetworkService.getAllAlbums()
         }
@@ -37,7 +37,7 @@ class AlbumRepository() {
 
 class AlbumPhotosRepository() {
 
-    suspend fun getAllPhotos(albumId: Int): List<Photo> {
+    suspend fun getAllPhotos(albumId: Int): List<Photo>? {
         return withContext(Dispatchers.IO){
             YasmaApi.retrofitNetworkService.getAlbumPhotos(albumId)
         }

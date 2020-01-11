@@ -21,14 +21,16 @@
             android:layout_height="0dp"
             android:clipToPadding="false"
             android:padding="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:albumListData="@{viewModel.allAlbums}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:albumListData="@{viewModel.allAlbums}"
             tools:itemCount="16"
-            tools:listitem="@layout/list_item_albums" />
+            tools:listitem="@layout/list_item_albums"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
 
         <ImageView
             android:id="@+id/image_status"
@@ -40,6 +42,21 @@
             app:layout_constraintTop_toTopOf="parent"
             app:showWhenListEmpty="@{viewModel.allAlbums}"
             android:visibility="gone" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showWhenListEmpty="@{viewModel.allAlbums}"
+            tools:showIn="@layout/fragment_posts">
+
+            <include layout="@layout/single_list_album_item_shimmer" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

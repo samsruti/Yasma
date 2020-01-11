@@ -30,16 +30,16 @@
             tools:itemCount="16"
             tools:listitem="@layout/list_item_post" />
 
-        <ImageView
-            android:id="@+id/image_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:showWhenListEmpty = "@{viewModel.allPosts}"
-            android:visibility="gone" />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:showWhenListEmpty="@{viewModel.allPosts}"
+            android:id="@+id/shimmer_layout"
+            tools:showIn="@layout/fragment_posts">
+
+            <include layout="@layout/single_list_post_item_shimmer" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

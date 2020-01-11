@@ -1,10 +1,7 @@
 package com.talview.yasma.samsruti.ui.posts
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.talview.yasma.samsruti.domain.ApiStatus
 import com.talview.yasma.samsruti.domain.Post
 import com.talview.yasma.samsruti.repository.PostRepository
@@ -42,7 +39,6 @@ class PostsViewModel() : ViewModel() {
     }
 
     init {
-
         uiCoroutineScope.launch {
             _status.value = ApiStatus.LOADING
             fetchAllPosts(postRepository.getAllPosts())
@@ -66,5 +62,7 @@ class PostsViewModel() : ViewModel() {
         super.onCleared()
         viewModelJob.cancel()
     }
+
+
 
 }

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.talview.yasma.samsruti.R
 import com.talview.yasma.samsruti.databinding.FragmentPostDetailsBinding
 import com.talview.yasma.samsruti.databinding.ListItemPostCommentBinding
+import com.talview.yasma.samsruti.domain.ApiStatus
 import com.talview.yasma.samsruti.ui.albums.detail.PostDetailsViewModel
 
 /**
@@ -23,20 +24,36 @@ class PostDetailsFragment : Fragment() {
 
     private val postDetailsFragmentArgs: PostDetailsFragmentArgs by navArgs()
 
+    private val viewModel: PostDetailsViewModel by lazy {
+        val application = requireNotNull(activity).application
+
+        val currentPost = postDetailsFragmentArgs.selectedPost
+        val viewModelFactory = PostDetailsViewModelFactory(currentPost, application)
+        ViewModelProviders.of(this, viewModelFactory).get(PostDetailsViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val application = requireNotNull(activity).application
 
-        val currentPost = postDetailsFragmentArgs.selectedPost
 
-        val viewModelFactory = PostDetailsViewModelFactory(currentPost, application)
 
-        val binding = FragmentPostDetailsBinding.inflate(inflater)
+        val binding = FragmentPostDetailsBinding.inflate(inflater,container,false)
         binding.setLifecycleOwner(this)
-        binding.viewModel =  ViewModelProviders.of(this, viewModelFactory).get(PostDetailsViewModel::class.java)
+        binding.viewModel = viewModel
+
+        viewModel.status.observe(viewLifecycleOwner, Observer {
+            when(it){
+                ApiStatus.LOADING ->
+                    binding.shimmerLayout.startShimmer()
+                else ->
+
+                    binding.shimmerLayout.stopShimmer()
+            }
+        })
+
 
 
         binding.commentsRecyclerView.adapter = PostCommentsListAdapter(PostCommentsListAdapter.CallBackClickListener{

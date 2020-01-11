@@ -95,12 +95,19 @@ dependencies {
     // WorkManager
     implementation "android.arch.work:work-runtime-ktx:$version_work"
 
+
+    // Facebook shimmer effect dependency
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+
 //    Testing
     testImplementation "org.mockito:mockito-core:$mockicto_version"
     testImplementation "org.mockito:mockito-inline:$mockicto_version"
 
 //    Mockito-Kotlin for better Syntax
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+
+
 
 //    Android Architecture Core Testing
     testImplementation 'android.arch.core:core-testing:2.1.0'
@@ -116,4 +123,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0-beta01'
+
+
 }

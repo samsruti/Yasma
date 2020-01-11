@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.talview.yasma.samsruti.domain.ApiStatus
 import com.talview.yasma.samsruti.domain.Comment
 import com.talview.yasma.samsruti.domain.Post
 import com.talview.yasma.samsruti.repository.PostCommentRepository
-import com.talview.yasma.samsruti.repository.PostRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,6 +29,9 @@ class PostDetailsViewModel(
 
     private val postCommentRepository = PostCommentRepository()
 
+    private val _status = MutableLiveData<ApiStatus>()
+    val status: LiveData<ApiStatus>
+        get() = _status
 
 
 
@@ -44,11 +46,22 @@ class PostDetailsViewModel(
     init {
         _selectedPost.value = currentPost
         uiCoroutineScope.launch {
-            _allComments.value = postCommentRepository.getAllComments(currentPost.id)
+            _status.value = ApiStatus.LOADING
+            fetchAllComments(postCommentRepository.getAllComments(currentPost.id))
         }
 
-    }
 
+    }
+    fun fetchAllComments(allComments: List<Comment>?){
+        if (allComments == null){
+            _status.value = ApiStatus.ERROR
+        } else if(allComments.isEmpty()){
+            _status.value = ApiStatus.UNSUCCESSFUL
+        } else {
+            _allComments.value = allComments
+            _status.value = ApiStatus.DONE
+        }
+    }
 
 
 }

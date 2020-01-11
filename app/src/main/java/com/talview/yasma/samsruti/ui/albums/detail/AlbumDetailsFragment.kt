@@ -29,7 +29,7 @@ class AlbumDetailsFragment : Fragment() {
 
         val viewModelFactory = AlbumDetailsViewModelFactory(currentAlbum, application)
 
-        val binding = FragmentAlbumDetailsBinding.inflate(inflater)
+        val binding = FragmentAlbumDetailsBinding.inflate(inflater,container,false)
         binding.setLifecycleOwner(this)
         binding.selectedAlbumViewModel =  ViewModelProviders.of(this, viewModelFactory)
             .get(AlbumDetailsViewModel::class.java)

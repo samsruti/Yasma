@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -8,33 +10,58 @@
 
     </data>
 
-    <androidx.cardview.widget.CardView
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical">
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/comment_user_name"
+            style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_height="wrap_content"
+            android:text="@{eachComment.email}"
+            android:textStyle="italic"
+            tools:text="email" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:text="@{eachComment.name}"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                android:textSize="21sp" />
+        <TextView
+            android:id="@+id/comment_name"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{eachComment.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#F3050000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="@string/app_name" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@{eachComment.body}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="17sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/comment_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{eachComment.body}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp"
+            tools:text="body" />
 
-    </androidx.cardview.widget.CardView>
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
+            android:background="#2D221D1D" />
+
+
+    </LinearLayout>
 </layout>

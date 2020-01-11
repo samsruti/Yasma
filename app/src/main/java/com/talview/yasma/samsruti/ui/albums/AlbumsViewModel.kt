@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.talview.yasma.samsruti.domain.Album
 import com.talview.yasma.samsruti.domain.ApiStatus
+import com.talview.yasma.samsruti.domain.Post
 import com.talview.yasma.samsruti.repository.AlbumRepository
 import com.talview.yasma.samsruti.repository.PostRepository
 import kotlinx.coroutines.CoroutineScope
@@ -43,7 +44,19 @@ class AlbumsViewModel : ViewModel() {
     init {
 
         uiCoroutineScope.launch {
-            _allAlbums.value = albumRepository.getAllAlbums()
+            _status.value = ApiStatus.LOADING
+            fetchAllAlbums(albumRepository.getAllAlbums())
+        }
+    }
+
+    fun fetchAllAlbums(albums: List<Album>?) {
+        if (albums == null){
+            _status.value = ApiStatus.ERROR
+        } else if(albums.isEmpty()){
+            _status.value = ApiStatus.UNSUCCESSFUL
+        } else {
+            _allAlbums.value = albums
+            _status.value = ApiStatus.DONE
         }
     }
 }
