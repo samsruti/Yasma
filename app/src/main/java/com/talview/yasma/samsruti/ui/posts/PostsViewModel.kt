@@ -4,13 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.talview.yasma.samsruti.domain.ApiStatus
 import com.talview.yasma.samsruti.domain.Post
 import com.talview.yasma.samsruti.repository.PostRepository
 import kotlinx.coroutines.*
 
 
-class PostsViewModel(application: Application) : AndroidViewModel(application) {
+class PostsViewModel() : ViewModel() {
 
     private val viewModelJob = Job()
     private val uiCoroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -42,8 +43,8 @@ class PostsViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
 
-        _status.value = ApiStatus.LOADING
         uiCoroutineScope.launch {
+            _status.value = ApiStatus.LOADING
             fetchAllPosts(postRepository.getAllPosts())
         }
 

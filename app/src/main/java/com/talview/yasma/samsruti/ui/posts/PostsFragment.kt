@@ -24,14 +24,17 @@ class PostsFragment : Fragment() {
     ): View? {
 
 
-        val application = requireNotNull(activity).application
-
         val binding = FragmentPostsBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
-        val viewModelFactory = PostsViewModelFactory(application)
 
-        postsViewModel =  ViewModelProviders.of(this, viewModelFactory).get(PostsViewModel::class.java)
+//        TODO: ViewModelFactory
+
+//        val application = requireNotNull(activity).application
+//        val viewModelFactory = PostsViewModelFactory(application)
+//         postsViewModel =  ViewModelProviders.of(this, viewModelFactory).get(PostsViewModel::class.java)
+
+        postsViewModel =  ViewModelProviders.of(this).get(PostsViewModel::class.java)
 
         binding.viewModel = postsViewModel
 
