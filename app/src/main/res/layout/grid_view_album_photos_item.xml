@@ -19,5 +19,6 @@
         android:padding="2dp"
         app:photoThumbnailURL="@{currentPhoto.thumbnailUrl}"
         tools:src="@tools:sample/backgrounds/scenic"
-        android:contentDescription="album photo" />
+        android:contentDescription="album photo"
+        />
 </layout>

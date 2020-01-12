@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.talview.yasma.samsruti.databinding.FragmentPostDetailsBinding
 import com.talview.yasma.samsruti.domain.ApiStatus
+import org.koin.android.ext.android.getKoin
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -20,13 +21,16 @@ class PostDetailsFragment : Fragment() {
 
     private val postDetailsFragmentArgs: PostDetailsFragmentArgs by navArgs()
 
-    private val viewModel: PostDetailsViewModel by lazy {
-        val application = requireNotNull(activity).application
+//    private val viewModel: PostDetailsViewModel by lazy {
+//        val application = requireNotNull(activity).application
+//
+//        val currentPost = postDetailsFragmentArgs.selectedPost
+//        val viewModelFactory = PostDetailsViewModel.Factory(currentPost, application)
+//        ViewModelProviders.of(this, viewModelFactory).get(PostDetailsViewModel::class.java)
+//    }
 
-        val currentPost = postDetailsFragmentArgs.selectedPost
-        val viewModelFactory = PostDetailsViewModel.Factory(currentPost, application)
-        ViewModelProviders.of(this, viewModelFactory).get(PostDetailsViewModel::class.java)
-    }
+
+    private val viewModel by viewModel<PostDetailsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +38,7 @@ class PostDetailsFragment : Fragment() {
     ): View? {
 
 
-
+        getKoin().setProperty("selectedPost", postDetailsFragmentArgs.selectedPost)
 
         val binding = FragmentPostDetailsBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this

@@ -7,6 +7,7 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.talview.yasma.samsruti.R
 import com.talview.yasma.samsruti.domain.*
@@ -55,10 +56,10 @@ fun bindPhotoThumbnailURL(imageView: ImageView, thumbnailURL: String?) {
         Glide.with(imageView.context)
             .load(imageUri)
             .apply(RequestOptions()
-                .placeholder(R.drawable.ic_loader_img)
+                .placeholder(R.color.placeholder)
                 .error(R.drawable.ic_error_outline_black_24dp)
             )
-        //Todo: Resizing animation
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)
     }
 }

@@ -6,21 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.talview.yasma.samsruti.databinding.FragmentAlbumsBinding
 import com.talview.yasma.samsruti.domain.ApiStatus
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AlbumsFragment : Fragment() {
 
-    private val albumsViewModel: AlbumsViewModel by lazy {
-
-        val application = requireNotNull(activity).application
-
-        val viewModelFactory = AlbumsViewModel.Factory(application)
-
-        ViewModelProviders.of(this,viewModelFactory).get(AlbumsViewModel::class.java)
-    }
+    private val albumsViewModel by viewModel<AlbumsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

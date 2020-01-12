@@ -2,7 +2,6 @@ package com.talview.yasma.samsruti.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.talview.yasma.samsruti.domain.Post
 
 @Entity(tableName = "user_posts")
 data class DatabasePost constructor(

@@ -7,35 +7,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.talview.yasma.samsruti.databinding.FragmentAlbumDetailsBinding
+import org.koin.android.ext.android.getKoin
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass.
  */
 class AlbumDetailsFragment : Fragment() {
 
+
+    private val viewModel  by viewModel<AlbumDetailsViewModel>()
+
+
     val albumDetailsArgs: AlbumDetailsFragmentArgs by navArgs()
 
-    private val viewModel: AlbumDetailsViewModel by lazy {
-        val application = requireNotNull(activity).application
 
-        val currentAlbum = albumDetailsArgs.selectedAlbum
-
-        val viewModelFactory = AlbumDetailsViewModel.Factory(currentAlbum, application)
-
-        ViewModelProviders.of(this, viewModelFactory)
-            .get(AlbumDetailsViewModel::class.java)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-
+        getKoin().setProperty("selectedAlbum",albumDetailsArgs.selectedAlbum)
 
         val binding = FragmentAlbumDetailsBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this

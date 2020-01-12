@@ -1,28 +1,20 @@
 package com.talview.yasma.samsruti.ui.posts.detail
 
 
-import android.app.Application
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
-import com.talview.yasma.samsruti.database.getDatabase
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.talview.yasma.samsruti.domain.ApiStatus
 import com.talview.yasma.samsruti.domain.Post
-import com.talview.yasma.samsruti.repository.PostCommentRepository
-import kotlinx.coroutines.*
+import com.talview.yasma.samsruti.repository.YasmaRepository
+import com.talview.yasma.samsruti.viewmodel.BaseViewModel
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
  */
-class PostDetailsViewModel(
-    currentPost: Post,
-    app: Application
-) : AndroidViewModel(app) {
+class PostDetailsViewModel(postCommentRepository:YasmaRepository, val currentPost: Post) : BaseViewModel(){
 
-    private val viewModelJob = Job()
-    private val uiCoroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-    private val database = getDatabase(app)
-    private val postCommentRepository = PostCommentRepository(database)
 
     private val _status = MutableLiveData<ApiStatus>()
     val status: LiveData<ApiStatus>
@@ -50,29 +42,14 @@ class PostDetailsViewModel(
             _status.value = ApiStatus.DONE
         }
 
-        uiCoroutineScope.launch {
+        mainScope.launch {
 
             _status.value = ApiStatus.LOADING
+            postCommentRepository.getAllComments(currentPost.id)
 
-            async {
-                postCommentRepository.getAllComments(currentPost.id)
-            }.await()
         }
 
 
-    }
-
-
-    class Factory(
-        private val currentPost: Post,
-        private val application: Application
-    ): ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(PostDetailsViewModel::class.java)) {
-                return PostDetailsViewModel(currentPost, application) as T
-            }
-            throw IllegalArgumentException("Unknow ViewModel Class")
-        }
     }
 
 }

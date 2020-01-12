@@ -1,34 +1,20 @@
 package com.talview.yasma.samsruti.ui.posts
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.talview.yasma.samsruti.database.getDatabase
 import com.talview.yasma.samsruti.domain.ApiStatus
 import com.talview.yasma.samsruti.domain.Post
-import com.talview.yasma.samsruti.repository.PostRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.talview.yasma.samsruti.repository.YasmaRepository
+import com.talview.yasma.samsruti.viewmodel.BaseViewModel
 import kotlinx.coroutines.launch
 
 
-class PostsViewModel(app: Application) : ViewModel() {
-
-    private val viewModelJob = Job()
-    private val uiCoroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-    private val database = getDatabase(app)
-    private val postRepository = PostRepository(database)
-
-
-
+class PostsViewModel(repository: YasmaRepository) : BaseViewModel() {
 
     private val _status = MutableLiveData<ApiStatus>()
     val status: LiveData<ApiStatus>
         get() = _status
+
 
     private val _navigateToSelectedPost = MutableLiveData<Post>()
     val navigateToSelectedPost: LiveData<Post>
@@ -43,14 +29,15 @@ class PostsViewModel(app: Application) : ViewModel() {
     }
 
     init {
-        uiCoroutineScope.launch {
-            _status.value = ApiStatus.LOADING
-            fetchAllPosts(postRepository.getAllPosts())
+        _status.value = ApiStatus.LOADING
+        mainScope.launch {
+            val retriedPosts = repository.getAllPosts()
+            fetchAllPosts(retriedPosts)
         }
 
     }
 
-    val allPosts = postRepository.posts
+    val allPosts = repository.posts
 
     fun fetchAllPosts(userPosts: List<Post>?) {
         if (userPosts == null){
@@ -61,23 +48,5 @@ class PostsViewModel(app: Application) : ViewModel() {
             _status.value = ApiStatus.DONE
         }
     }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
-    class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(PostsViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return PostsViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
-
-
 
 }
