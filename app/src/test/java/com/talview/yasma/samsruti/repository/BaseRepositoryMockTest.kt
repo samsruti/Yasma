@@ -5,7 +5,7 @@ import com.talview.yasma.samsruti.di.AppComponent
 import com.talview.yasma.samsruti.diTest.MockedDIComponent
 import org.koin.core.context.startKoin
 
-open class BaseRepositoryMockTest : BaseMockServerTest() {
+abstract class BaseRepositoryMockTest : BaseMockServerTest() {
     override fun setUp() {
         super.setUp()
         startKoin {

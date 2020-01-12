@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
-class PostsViewModel(repository: YasmaRepository) : BaseViewModel() {
+class PostsViewModel(val repository: YasmaRepository) : BaseViewModel() {
 
 
     private val _status = MutableLiveData<ApiStatus>()
@@ -32,16 +32,7 @@ class PostsViewModel(repository: YasmaRepository) : BaseViewModel() {
 
     init {
         _status.value = ApiStatus.LOADING
-        mainScope.launch {
-            try {
-                val retriedPosts = repository.getAllPosts()
-                fetchAllPosts(retriedPosts)
-            } catch (e:Exception){
-                Timber.d("Error: $e")
-                _status.value = ApiStatus.UNKNOWN_HOST
-            }
-
-        }
+        updateFromRepo()
 
     }
 
@@ -54,6 +45,19 @@ class PostsViewModel(repository: YasmaRepository) : BaseViewModel() {
             _status.value = ApiStatus.UNSUCCESSFUL
         } else {
             _status.value = ApiStatus.DONE
+        }
+    }
+
+    fun updateFromRepo(){
+        mainScope.launch {
+            try {
+                val retriedPosts = repository.getAllPosts()
+                fetchAllPosts(retriedPosts)
+            } catch (e:Exception){
+                Timber.d("Error: $e")
+                _status.value = ApiStatus.UNKNOWN_HOST
+            }
+
         }
     }
 
