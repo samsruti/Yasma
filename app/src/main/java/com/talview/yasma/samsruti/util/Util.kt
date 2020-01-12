@@ -2,21 +2,20 @@ package com.talview.yasma.samsruti.util
 
 import android.view.View
 import com.talview.yasma.samsruti.domain.ApiStatus
+import com.talview.yasma.samsruti.domain.ApiStatus.*
 
 fun View.setViewVisibility(status: ApiStatus){
-    when (status) {
-        ApiStatus.LOADING-> {
-            visibility = View.VISIBLE
+    visibility = when (status) {
+        LOADING -> {
+            View.VISIBLE
         }
-        ApiStatus.ERROR -> {
-            visibility = View.VISIBLE
+        ERROR -> {
+            View.VISIBLE
         }
-        ApiStatus.DONE -> {
-            visibility = View.GONE
+        UNKNOWN_HOST -> {
+            View.VISIBLE
         }
-        ApiStatus.UNSUCCESSFUL -> {
-            visibility = View.GONE
-        }
-
+        else ->
+            View.GONE
     }
 }

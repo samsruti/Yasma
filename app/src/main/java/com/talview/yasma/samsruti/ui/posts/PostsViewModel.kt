@@ -12,12 +12,6 @@ import timber.log.Timber
 
 class PostsViewModel(repository: YasmaRepository) : BaseViewModel() {
 
-    private val _forceUpdate = MutableLiveData<Boolean>(false)
-
-    private val _dataLoading = MutableLiveData<Boolean>()
-    val dataLoading: LiveData<Boolean> = _dataLoading
-
-
 
     private val _status = MutableLiveData<ApiStatus>()
     val status: LiveData<ApiStatus>
@@ -63,8 +57,6 @@ class PostsViewModel(repository: YasmaRepository) : BaseViewModel() {
         }
     }
 
-    fun loadTasks(forceUpdate: Boolean) {
-        _forceUpdate.value = forceUpdate
-    }
+
 
 }

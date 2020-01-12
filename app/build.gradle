@@ -107,10 +107,6 @@ dependencies {
     // WorkManager
     implementation "android.arch.work:work-runtime-ktx:$version_work"
 
-
-    //Pagination
-    implementation "androidx.paging:paging-runtime:$version_paging"
-
     // Facebook shimmer effect dependency
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
@@ -139,8 +135,10 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "com.squareup.okhttp3:mockwebserver:$mock_web_server"
     testImplementation "org.koin:koin-test:$koin_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 
     //ANDROID TEST
+    androidTestImplementation "androidx.arch.core:core-testing:$archtest"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mock_web_server"
     androidTestImplementation "org.koin:koin-test:$koin_version"
     androidTestImplementation "androidx.test:runner:$testRunner"

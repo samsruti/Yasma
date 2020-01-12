@@ -4,9 +4,7 @@ package com.talview.yasma.samsruti.ui.albums.detail
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.talview.yasma.samsruti.domain.Album
-import com.talview.yasma.samsruti.domain.ApiStatus
-import com.talview.yasma.samsruti.domain.Photo
+import com.talview.yasma.samsruti.domain.*
 import com.talview.yasma.samsruti.repository.YasmaRepository
 import com.talview.yasma.samsruti.viewmodel.BaseViewModel
 import kotlinx.coroutines.launch

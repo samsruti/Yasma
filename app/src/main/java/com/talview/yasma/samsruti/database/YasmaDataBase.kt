@@ -11,7 +11,6 @@ abstract class YasmaDatabase: RoomDatabase() {
     abstract fun getDao(): YasmaDao
 
     companion object {
-        const val DB_VERSION = 1
         private const val DB_NAME = "yasmaApp.db"
         @Volatile
         private var INSTANCE: YasmaDatabase? = null
