@@ -32,7 +32,12 @@ class AlbumDetailsViewModel(albumPhotosRepository:YasmaRepository, val currentAl
         if (allPhotos.value.isNullOrEmpty()) _status.value = ApiStatus.LOADING
 
         mainScope.launch {
-            fetchAllPhotos(albumPhotosRepository.getAllPhotos(currentAlbum.id))
+            try{
+                fetchAllPhotos(albumPhotosRepository.getAllPhotos(currentAlbum.id))
+            } catch (e:Exception){
+                _status.value = ApiStatus.UNKNOWN_HOST
+            }
+
         }
     }
 

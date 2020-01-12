@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.talview.yasma.samsruti.databinding.FragmentPostDetailsBinding
 import com.talview.yasma.samsruti.domain.ApiStatus
 import org.koin.android.ext.android.getKoin
@@ -46,6 +47,10 @@ class PostDetailsFragment : Fragment() {
 
         viewModel.status.observe(viewLifecycleOwner, Observer {
             when(it){
+                ApiStatus.UNKNOWN_HOST -> {
+                    Snackbar.make(binding.root,"No Internet Connection", Snackbar.LENGTH_LONG).show()
+                }
+
                 ApiStatus.LOADING ->
                     binding.shimmerLayout.startShimmer()
                 else ->

@@ -7,9 +7,17 @@ import com.talview.yasma.samsruti.domain.Post
 import com.talview.yasma.samsruti.repository.YasmaRepository
 import com.talview.yasma.samsruti.viewmodel.BaseViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 class PostsViewModel(repository: YasmaRepository) : BaseViewModel() {
+
+    private val _forceUpdate = MutableLiveData<Boolean>(false)
+
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
+
+
 
     private val _status = MutableLiveData<ApiStatus>()
     val status: LiveData<ApiStatus>
@@ -31,8 +39,14 @@ class PostsViewModel(repository: YasmaRepository) : BaseViewModel() {
     init {
         _status.value = ApiStatus.LOADING
         mainScope.launch {
-            val retriedPosts = repository.getAllPosts()
-            fetchAllPosts(retriedPosts)
+            try {
+                val retriedPosts = repository.getAllPosts()
+                fetchAllPosts(retriedPosts)
+            } catch (e:Exception){
+                Timber.d("Error: $e")
+                _status.value = ApiStatus.UNKNOWN_HOST
+            }
+
         }
 
     }
@@ -47,6 +61,10 @@ class PostsViewModel(repository: YasmaRepository) : BaseViewModel() {
         } else {
             _status.value = ApiStatus.DONE
         }
+    }
+
+    fun loadTasks(forceUpdate: Boolean) {
+        _forceUpdate.value = forceUpdate
     }
 
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.talview.yasma.samsruti.databinding.FragmentAlbumsBinding
 import com.talview.yasma.samsruti.domain.ApiStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,6 +37,10 @@ class AlbumsFragment : Fragment() {
 
         albumsViewModel.status.observe(this, Observer {
             when(it){
+                ApiStatus.UNKNOWN_HOST -> {
+                    Snackbar.make(binding.root,"No Internet Connection", Snackbar.LENGTH_LONG).show()
+                }
+
                 ApiStatus.LOADING ->
                     binding.shimmerLayout.startShimmer()
                 else ->

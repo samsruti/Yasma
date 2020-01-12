@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 
-enum class ApiStatus {LOADING, DONE, ERROR, UNSUCCESSFUL }
+enum class ApiStatus {LOADING, DONE, ERROR, UNSUCCESSFUL, UNKNOWN_HOST }
 
 @Parcelize
 data class Post(

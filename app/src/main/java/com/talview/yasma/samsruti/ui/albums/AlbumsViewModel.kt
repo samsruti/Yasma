@@ -7,6 +7,7 @@ import com.talview.yasma.samsruti.domain.ApiStatus
 import com.talview.yasma.samsruti.repository.YasmaRepository
 import com.talview.yasma.samsruti.viewmodel.BaseViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class AlbumsViewModel(albumRepository: YasmaRepository) : BaseViewModel() {
 
@@ -31,10 +32,15 @@ class AlbumsViewModel(albumRepository: YasmaRepository) : BaseViewModel() {
     val allAlbums = albumRepository.albums
 
     init {
-        _status.value = ApiStatus.LOADING
         mainScope.launch {
+            _status.value = ApiStatus.LOADING
 
-            fetchAllAlbums(albumRepository.getAllAlbums())
+            try {
+                fetchAllAlbums(albumRepository.getAllAlbums())
+            } catch (e:Exception){
+                Timber.d("Error: $e")
+                _status.value = ApiStatus.UNKNOWN_HOST
+            }
         }
     }
 
